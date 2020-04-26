@@ -1,0 +1,74 @@
+openapi: 3.0.0
+info:
+  title: Especificação relatório de desempenho de crescimento da criança
+  description: Especificação relatório de desempenho de crescimento da criança
+  contact:
+    email: suport@matheusmoreira.com
+  version: 1.0.0
+servers:
+- url: /
+security:
+- application:
+  - read
+  - write
+paths:
+  /accounts/{email}/progress:
+    get:
+      summary: Recuperar progresso de crescimento das crianças pelo email da conta
+        de usuário
+      parameters:
+      - name: email
+        in: path
+        description: E-mail de identificação da conta de usuário
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: token
+        in: header
+        description: Token JWT no header
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: array
+          items:
+            type: string
+            format: string
+        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF5bGFuQGJvc2Nhcmluby5jb20iLCJwYXNzd29yZCI6InlhMGdzcWh5NHd6dnV2YjQifQ.yN_8-Mge9mFgsnYHnPEh_ZzNP7YKvSbQ3Alug9HMCsM
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/body_response'
+        "400":
+          description: Dados request enviados incorretos
+        "401":
+          description: Token invalido, inexistente ou expirado
+        "404":
+          description: Recurso {email} não encontrado
+        "500":
+          description: Erro no servidor
+components:
+  schemas:
+    body_response:
+      required:
+      - dataProgress
+      - headCircumference
+      - height
+      - weight
+      type: object
+      properties:
+        height:
+          type: number
+        weight:
+          type: number
+          example: 45
+        headCircumference:
+          type: number
+        dataProgress:
+          type: string
+          format: date
