@@ -61,7 +61,10 @@ typings/
 .next
 
 package-*.json
+
 /public
+
+/dist
 
 # Created by https://www.gitignore.io/api/intellij+all
 # Edit at https://www.gitignore.io/?templates=intellij+all
